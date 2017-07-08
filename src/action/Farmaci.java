@@ -21,23 +21,18 @@ public class Farmaci extends Action{
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        String sql="SELECT * FROM mydb.farmaci;";
-        //String sqlR= "SELECT * FROM mydb.ricette;";
-        //String sqlB = "SELECT * FROM mydb.banco;";
 
         Statement stmt = null;
-        Statement stmtR = null;
-        Statement stmtB = null;
+        Statement stmtidF = null;
 
         ResultSet rs = null;
-        ResultSet rsR = null;
-        ResultSet rsB = null;
+        ResultSet rsidF = null;
 
         String url = "jdbc:mysql://localhost:3306/mydb";
         String driverName = "com.mysql.jdbc.Driver";
         String userDB = "root";
         String passwordDB = "ghiaccio";
-        java.sql.Connection cnn;
+        java.sql.Connection cnn = null;
 
         //INSERT
         FarmaciBean farmaci = (FarmaciBean) form;
@@ -53,8 +48,7 @@ public class Farmaci extends Action{
             Class.forName(driverName);
             cnn  = DriverManager.getConnection(url,userDB,passwordDB);
             stmt = cnn.createStatement();
-            stmtR = cnn.createStatement();
-            stmtB = cnn.createStatement();
+
         }
         catch (ClassNotFoundException ex) {
             System.out.println("Driver not found");
@@ -62,44 +56,72 @@ public class Farmaci extends Action{
 
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
+        Integer id  =(Integer) session.getAttribute("id");
 
-            ArrayList<FarmaciBean> a = new ArrayList<>();
+
+        stmtidF = cnn.createStatement();
+        String sqlidF = "SELECT idFarmacia FROM farmacia, user\n" +
+                        "WHERE user.farmacia_idfarmacia = farmacia.idfarmacia\n" +
+                        "AND user.farmacia_idfarmacia ='" + id + "';";
+
+        Integer idFar = 0;
+
+        rsidF = stmtidF.executeQuery(sqlidF);
+
+        while(rsidF.next()){
+            idFar = rsidF.getInt("idFarmacia");
+        }
+        String b = Integer.toString(idFar);
+
+
+        String sql = "SELECT idfarmaco,farmaci.nome,quantita,farmaci.ricetta,farmaci.prezzo\n" +
+                "FROM farmaci, farmacia, farmaci_has_farmacia, user\n" +
+                "WHERE user.farmacia_idfarmacia = '" + idFar + "' \n" +
+                "AND farmacia.idfarmacia = '" + idFar + "'\n" +
+                "AND farmacia.idfarmacia = farmaci_has_farmacia.farmacia_idfarmacia\n" +
+                "AND farmaci.idFarmaco = farmaci_has_farmacia.farmaci_idFarmaco\n" +
+                "AND user.farmacia_idfarmacia = farmacia.idfarmacia;";
+
+
+        ArrayList<FarmaciBean> a = new ArrayList<>();
 
         if (role != "TFO"){
-            System.out.println(role);
-             rs = stmt.executeQuery(sql);
 
-             //rsR=stmtR.executeQuery(sqlR);
-             //rsB=stmtB.executeQuery(sqlB);
+            rs = stmt.executeQuery(sql);
+
             String codice = null;
             String prodotto = null;
             Integer quantita = null;
             Boolean ricetta = null;
             String prezzo = null;
 
-
-
              while(rs.next()){
-
-                 System.out.println(rs);
                  FarmaciBean view = new FarmaciBean();
 
                  codice = rs.getString(1);
-                 prodotto = rs.getString(2);
-                 quantita = rs.getInt(3);
-                 ricetta = rs.getBoolean(4 );
-                 prezzo = rs.getString(5);
-
                  view.codice = codice;
+
+                 prodotto = rs.getString(2);
                  view.nome = prodotto;
+
+                 quantita = rs.getInt(3);
                  view.quantita = quantita;
+
+                 ricetta = rs.getBoolean(4 );
                  view.ricetta = ricetta;
+
+                 prezzo = rs.getString(5);
                  view.prezzo = prezzo;
 
                  a.add(view);
+
              }
+            request.setAttribute("View",a);
+            for (FarmaciBean bb : a ) {
+                System.out.println(bb.getNome());
+            }
               //System.out.println(a.toString());
-             request.setAttribute("View",a);
+
         }
         else{
             System.out.println(role);
