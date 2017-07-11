@@ -34,5 +34,6 @@ public class Messaggi extends Action {
 
 
         return mapping.findForward("messaggi");
+
     }
 }
