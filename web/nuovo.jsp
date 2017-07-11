@@ -37,7 +37,8 @@
             </ul>
         </div>
         <div class="col-sm-5 col-md-6">
-            <form name="form" ng-submit="vm.nuovo()" role="form" action="/nuovo.do">
+            <form name="form" ng-submit="vm.login()" role="form" action="/nuovo.do">
+
                 <div class="form-group" ng-class="{ 'has-error': form.mittente.$dirty && form.mittente.$error.required }">
                     <label for="mittente">Mittente</label>
                     <input type="email" value="${login.user}" name="mittente" id="mittente" class="form-control" ng-model="vm.mittente" readonly />
@@ -49,16 +50,18 @@
                 </div>
                 <div class="form-group" ng-class="{ 'has-error': form.oggetto.$dirty && form.username.$error.required }">
                     <label for="oggetto">Oggetto</label>
-                    <input type="oggetto" name="oggetto" id="oggetto" class="form-control" ng-model="vm.oggetto" required />
+                    <input type="text" name="oggetto" id="oggetto" class="form-control" ng-model="vm.oggetto" required />
                     <span ng-show="form.oggetto.$dirty && form.oggetto.$error.required" class="help-block">Oggetto dell'email richiesto</span>
                 </div>
                 <div class="form-group">
                     <label for="testo">Testo</label>
                     <textarea cols="50" rows="15" name="testo" id="testo" class="form-control" ng-model="vm.testo"></textarea>
                 </div>
-                <div class ="form-group">
-                    <button type="submit" class="btn btn-primary">Invia</button>
+
+                <div class="form-actions">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
                 </div>
+
             </form>
         </div>
     </div>

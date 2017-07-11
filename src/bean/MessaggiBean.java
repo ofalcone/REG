@@ -2,6 +2,8 @@ package bean;
 
 import org.apache.struts.action.ActionForm;
 
+import java.sql.Date;
+
 /**
  * Created by Orlando on 07/07/2017.
  */
@@ -36,7 +38,7 @@ public class MessaggiBean extends ActionForm {
         this.oggetto = oggetto;
     }
 
-    public String oggetto;
+    private String oggetto;
 
 
     public String getTesto() {
@@ -48,4 +50,24 @@ public class MessaggiBean extends ActionForm {
     }
 
     public String testo;
+
+    public String testoDB;
+
+    public String getTestoDB() {
+        return testoDB;
+    }
+
+    public void setTestoDB(String testoDB) {
+        this.testoDB = testoDB;
+    }
+
+    public Date getDatainvio() {
+        return datainvio;
+    }
+
+    public void setDatainvio(Date datainvio) {
+        this.datainvio = datainvio;
+    }
+
+    public Date datainvio;
 }
