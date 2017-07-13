@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,20 +22,12 @@ public class Farmaci extends Action{
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-
+        Connection cnn = null;
         Statement stmt = null;
         Statement stmtidF = null;
-
         ResultSet rs = null;
         ResultSet rsidF = null;
 
-        String url = "jdbc:mysql://localhost:3306/mydb";
-        String driverName = "com.mysql.jdbc.Driver";
-        String userDB = "root";
-        String passwordDB = "ghiaccio";
-        java.sql.Connection cnn = null;
-
-        //INSERT
         FarmaciBean farmaci = (FarmaciBean) form;
 
         String cod = farmaci.getCodice();
@@ -43,16 +36,6 @@ public class Farmaci extends Action{
         Boolean ric = farmaci.isRicetta();
         String pre = farmaci.getPrezzo();
 
-
-        try {
-            Class.forName(driverName);
-            cnn  = DriverManager.getConnection(url,userDB,passwordDB);
-            stmt = cnn.createStatement();
-
-        }
-        catch (ClassNotFoundException ex) {
-            System.out.println("Driver not found");
-        }
 
         HttpSession session = request.getSession();
         String role = (String) session.getAttribute("role");
@@ -64,7 +47,7 @@ public class Farmaci extends Action{
                         "WHERE user.farmacia_idfarmacia = farmacia.idfarmacia\n" +
                         "AND user.farmacia_idfarmacia ='" + id + "';";
 
-        Integer idFar = 0;
+        int idFar = 0;
 
         rsidF = stmtidF.executeQuery(sqlidF);
 
@@ -114,13 +97,11 @@ public class Farmaci extends Action{
                  view.prezzo = prezzo;
 
                  a.add(view);
-
              }
             request.setAttribute("View",a);
             for (FarmaciBean bb : a ) {
                 System.out.println(bb.getNome());
             }
-              //System.out.println(a.toString());
 
         }
         else{

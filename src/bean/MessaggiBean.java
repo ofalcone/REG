@@ -9,6 +9,8 @@ import java.sql.Date;
  */
 public class MessaggiBean extends ActionForm {
 
+
+
     public String getMittente() {
         return mittente;
     }
