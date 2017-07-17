@@ -3,13 +3,36 @@ package bean;
 import org.apache.struts.action.ActionForm;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+
 
 /**
  * Created by Orlando on 07/07/2017.
  */
 public class MessaggiBean extends ActionForm {
+    public Timestamp datainvio;
 
+    public String ciao;
 
+    public Integer getIdmittente() {
+        return idmittente;
+    }
+
+    public void setIdmittente(Integer idmittente) {
+        this.idmittente = idmittente;
+    }
+
+    public Integer idmittente;
+
+    public int getIdmessaggio() {
+        return idmessaggio;
+    }
+
+    public void setIdmessaggio(int idmessaggio) {
+        this.idmessaggio = idmessaggio;
+    }
+
+    public int idmessaggio;
 
     public String getMittente() {
         return mittente;
@@ -40,7 +63,7 @@ public class MessaggiBean extends ActionForm {
         this.oggetto = oggetto;
     }
 
-    private String oggetto;
+    public String oggetto;
 
 
     public String getTesto() {
@@ -63,13 +86,11 @@ public class MessaggiBean extends ActionForm {
         this.testoDB = testoDB;
     }
 
-    public Date getDatainvio() {
+    public Timestamp getDatainvio() {
         return datainvio;
     }
 
-    public void setDatainvio(Date datainvio) {
+    public void setDatainvio(Timestamp datainvio) {
         this.datainvio = datainvio;
     }
-
-    public Date datainvio;
 }

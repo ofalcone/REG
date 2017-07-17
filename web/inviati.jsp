@@ -11,11 +11,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
     <title>Messaggi Inviati</title>
-
 </head>
 <body>
 <div class="container">
@@ -35,41 +35,43 @@
                 </li>
             </ul>
         </div>
+
         <div class="col-sm-9 col-md-8">
             <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">Mittente  data e ora</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">ciao${a.destinatario}</a>
                             <a href="/nuovo.do">
                                 <span class="glyphicon glyphicon-send"></span>
                             </a>
                         </h4>
                     </div>
                     <div id="collapse1" class="panel-collapse collapse in">
-                        <div class="panel-body"><b>Oggetto:</b><br>
-                            <i>Testo</i>
+                        <div class="panel-body"><b>a.oggetto</b><br>
+                            <i>a.testo</i>
                         </div>
-
                     </div>
                 </div>
-
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
-                                Collapsible Group 3</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">${a.mittente}</a>
+                            <a href="/nuovo.do">
+                                <span class="glyphicon glyphicon-send"></span>
+                            </a>
                         </h4>
                     </div>
-                    <div id="collapse3" class="panel-collapse collapse">
-                        <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                            minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                            commodo consequat.</div>
+                    <div id="collapse2" class="panel-collapse collapse in">
+                        <div class="panel-body"><b>a.oggetto</b><br>
+                            <i>a.testo</i>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
 </body>

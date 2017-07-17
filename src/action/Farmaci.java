@@ -99,9 +99,6 @@ public class Farmaci extends Action{
                  a.add(view);
              }
             request.setAttribute("View",a);
-            for (FarmaciBean bb : a ) {
-                System.out.println(bb.getNome());
-            }
 
         }
         else{

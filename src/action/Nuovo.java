@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -21,19 +22,10 @@ public class Nuovo extends Action {
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-
-
         Connection cnn = null;
         Statement stmt = null;
         ResultSet rs = null;
-
-
-
-
         cnn = ConnectionManager.getConnection();
-
-
-
 
 
         String destinatario = null;
@@ -41,36 +33,37 @@ public class Nuovo extends Action {
         String oggetto = null;
 
         HttpSession session = request.getSession();
-
-
-        MessaggiBean messaggi = (MessaggiBean) form;
         String mittente = (String) session.getAttribute("user");
 
+        MessaggiBean nuovo = (MessaggiBean) form;
+
+            destinatario = nuovo.getDestinatario();
+            oggetto = nuovo.getOggetto();
+            testo = nuovo.getTesto();
 
 
 
-            destinatario = messaggi.getDestinatario();
-            oggetto = messaggi.getOggetto();
-            testo = messaggi.getTesto();
-
-            Calendar currenttime = Calendar.getInstance();
-            // Date datainvio = new Date((currenttime.getTimeInMillis()));
+        nuovo.setTesto(testo);
+        nuovo.setOggetto(oggetto);
+        //messaggi.setDestinatario(destinatario);
+        nuovo.setMittente(mittente);
 
 
-            messaggi.setTesto(testo);
-            messaggi.setOggetto(oggetto);
-            //messaggi.setDestinatario(destinatario);
-            messaggi.setMittente(mittente);
+        if(destinatario != null) {
 
-            String sql = "INSERT INTO `mydb`.`messaggio` (`oggetto`, `testo`, `FKmittente`, `data`) " +
-                    "VALUES ('" + oggetto + "','" + testo + "', '1','" + testo + "',NOW() );\n";
-            stmt = cnn.createStatement();
-            stmt.executeUpdate(sql);
+            /*String sql = "INSERT INTO `mydb`.`messaggio` (`oggetto`, `testo`, `FKmittente`,`FKdestinatario`, `data`) " +
+                         "VALUES ('" + oggetto + "','" + testo + "','" + mittente + "','" + destinatario + "',NOW() );\n";*/
+            CallableStatement statement = cnn.prepareCall("{call nuovo(?,?,?,?)}");
 
+            statement.setString(1, oggetto);
+            statement.setString(2, testo);
+            statement.setString(3, mittente);
+            statement.setString(4, destinatario);
 
+            statement.execute();
+            statement.close();
+        }
 
-
-
-        return mapping.findForward("messaggi");
+        return mapping.findForward("nuovo");
     }
 }
