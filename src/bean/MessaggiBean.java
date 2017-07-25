@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class MessaggiBean extends ActionForm {
     public Timestamp datainvio;
 
-    public String ciao;
+
 
     public Integer getIdmittente() {
         return idmittente;
@@ -93,4 +93,17 @@ public class MessaggiBean extends ActionForm {
     public void setDatainvio(Timestamp datainvio) {
         this.datainvio = datainvio;
     }
+
+
+    public Integer getIddestinatario() {
+        return iddestinatario;
+    }
+
+    public void setIddestinatario(Integer iddestinatario) {
+        this.iddestinatario = iddestinatario;
+    }
+
+    public Integer iddestinatario;
+
+
 }

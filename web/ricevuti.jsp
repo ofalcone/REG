@@ -25,9 +25,6 @@
 <body>
 
 
-
-
-
 <div class="container">
     <hr />
     <div class="row">
@@ -53,7 +50,7 @@
                     </c:forEach>
                 </span>
 
-                </span>Email Ricevute</a></li>
+                </span>Email ricevute</a></li>
                 <li ><a href="/inviati.do">Email inviate</a></li>
                 <li>
                     <button type="button" onclick="history.go()" class="btn btn-default" data-toggle="tooltip" title="Refresh">
