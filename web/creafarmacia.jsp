@@ -1,8 +1,8 @@
-<c:if test="${session.role != 'REG'}">
-<script languaguage="javascript">
-  window.location = "/accessdenied.jsp";
-</script>
-</c:if>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:if test="${role != 'REG'} ">
+        <c:redirect url="index.jsp"></c:redirect>
+    </c:if>
 <%--
   Created by IntelliJ IDEA.
   User: Orlando
@@ -21,7 +21,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="CSS/inviati.css">
+    <link rel="stylesheet" type="text/css" href="inviati.css">
 
     <title>Creazione nuova farmacia</title>
 </head>

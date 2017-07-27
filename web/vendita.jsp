@@ -34,7 +34,7 @@
     </style>
 </head>
 <body>
-
+${vendita.controllo}
 <sql:setDataSource var = "snapshot" driver = "com.mysql.jdbc.Driver"
                    url = "jdbc:mysql://localhost/mydb"
                    user = "root"  password = "ghiaccio"/>
@@ -119,9 +119,9 @@
                     </div>
                 </form>
 
- <div id="toShow1">
+ <%--<div id="toShow1">--%>
                 <%--Aggiungo il paziente--%>
-                <%--<c:if test="${vendita.controllo == '1'}">--%>
+                <c:if test="${vendita.controllo == '1'}">
                     <form name="form" ng-submit="vm.paziente()" role="form" action="/vendita.do">
                         <div class="form-group">
                             <label for="cf">Codice fiscale</label>
@@ -161,11 +161,11 @@
                     <div class="form-actions">
                         <button type="submit"  ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrazione paziente</button>
                     </div>
-        <%--</c:if>--%>
+        </c:if>
 
 </form>
 </form>
-</div>
+<%--</div>--%>
 </div>
 </div>
 </div>

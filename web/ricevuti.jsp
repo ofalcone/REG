@@ -20,7 +20,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="CSS/ricevuti.css">
+    <link rel="stylesheet" type="text/css" href="ricevuti.css">
 
     <title>Messaggi Ricevuti</title>
 </head>

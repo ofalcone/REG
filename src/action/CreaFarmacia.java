@@ -61,6 +61,6 @@ public class CreaFarmacia extends Action {
 
         }
 
-        return mapping.findForward("creafarmacia");
+        return mapping.findForward("home");
     }
 }

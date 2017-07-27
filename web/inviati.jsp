@@ -18,7 +18,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="CSS/inviati.css">
+    <link rel="stylesheet" type="text/css" href="inviati.css">
 
     <title>Messaggi Inviati</title>
 </head>
