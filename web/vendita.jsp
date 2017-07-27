@@ -15,6 +15,11 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css">
+<script src="/javascript/datepicker.js"></script>
+<script src="javascript/checkPaziente.js"></script>
+<script src="javascript/checkRicetta.js"></script>
+
+<input type="hidden" name="code" value="<bean:write name="controllo" property="vendita.controllo"/>" />
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/sql" prefix = "sql"%>
@@ -24,12 +29,10 @@
 <head>
     <title>Vendita</title>
     <style>
-        #toShow{
-            display: none;
-        }
+        #toShow{display: none;}
+        #toShow1{display:none;}
     </style>
 </head>
-
 <body>
 
 <sql:setDataSource var = "snapshot" driver = "com.mysql.jdbc.Driver"
@@ -64,75 +67,108 @@
         </c:forEach>
     </table>
     <div class="form-actions">
-        <button type="submit" onclick="myCheck()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Seleziona prodotti</button>
-        <script src="javascript/check.js"></script>
+        <button type="submit" onclick="checkRicetta()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Seleziona prodotti</button>
     </div>
-</div>
 
 
 <div id="toShow">
-<div class="col-md-3 col-md-offset-4">
-    <form name="form" ng-submit="vm.vendita()" role="form" action="/vendita.do">
+    <div class="col-md-6 col-md-offset-3">
 
-        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-            <label for="cf">Codice fiscale del paziente</label>
-            <input type="text" pattern="[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]" name="cf" id="cf" class="form-control" ng-model="vm.cf" placeholder="es.FLCRND..."
-                   data-error="Compila questo campo"required />
-            <span ng-show="form.cf.$dirty && form.cf.$error.required" class="help-block"></span>
-        </div>
+    <%--Aggiungo riferimento a ricetta--%>
+        <form name="form" ng-submit="vm.paziente()" role="form" action="/vendita.do">
+            <div class="form-group" ng-class="{ 'has-error': form.cr.$dirty && form.cr.$error.required }">
+                <label for="cr">Codice ricetta</label>
+                <input type="text" name="cr" id="cr" class="form-control" ng-model="vm.cr" placeholder="es.12345ABV"
+                       data-error="Codice ricetta obbligarorio"required />
+                <span ng-show="form.cr.$dirty && form.cr.$error.required" class="help-block"></span>
+            </div>
 
-
-        <div class="form-actions">
-            <button type="submit" onclick="myControl()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Controllo CF</button>
-        </div>
-    </form>
-
-
-
-            <script src="javascript/alertutente.js"></script>
-                <form name="form" ng-submit="vm.paziente()" role="form" action="/vendita.do">
-
-                    <div class="form-group">
-                        <label for="cf">Codice fiscale</label>
-                        <input type="cf" value="${vendita.cf}" name="cf"  class="form-control" ng-model="vm.cf" readonly />
-                    </div>
-
-                    <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
-                        <label for="name">Nome paziente</label>
-                        <input type="text" name="name" id="name" class="form-control" ng-model="vm.name" placeholder="es.Mario"
-                               data-error="Nome paziente obbligatorio "required />
-                        <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block"></span>
-                    </div>
-                    <div class="form-group" ng-class="{ 'has-error': form.cognome.$dirty && form.cognome.$error.required }">
-                        <label for="cognome">Cognome paziente</label>
-                        <input type="text" name="cognome" id="cognome" class="form-control" ng-model="vm.cognome" placeholder="es.Rossi"
-                               data-error="Cognome paziente obbligatorio" required />
-                        <span ng-show="form.cognome.$dirty && form.cognome.$error.required" class="help-block"></span>
-                    </div>
-
-                    <form method="post">
-                        <div class="form-group form-group-sm">
-                            <label class="control-label requiredField" for="date">Date<span class="asteriskField"></span>
-                            </label>
-                            <div class="input-group">
-                                <div class="input-group-addon">
-                                    <i class="fa fa-calendar">
-                                    </i>
-                                </div>
-                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
-                            </div>
+            <form method="post">
+                <div class="form-group form-group-sm">
+                    <label class="control-label requiredField" for="date">Data ricetta<span class="asteriskField"></span>
+                    </label>
+                    <div class="input-group">
+                        <div class="input-group-addon">
+                            <i class="fa fa-calendar">
+                            </i>
                         </div>
-                        <script src="/javascript/datepicker.js"></script>
-                    </form>
+                        <input class="form-control" id="date" name="date" placeholder="MM/DD/YYYY" type="text"/>
+                    </div>
+                </div>
 
+            </form>
+
+            <form name="form" ng-submit="vm.paziente()" role="form" action="/vendita.do">
+                <div class="form-group" ng-class="{ 'has-error': form.nomemedico.$dirty && form.nomemedico.$error.required }">
+                    <label for="nomemedico">Nominativo medico</label>
+                    <input type="text" name="cr" id="nomemedico" class="form-control" ng-model="vm.nomemedico" placeholder="es.Dott.Mario Rossi"
+                           data-error="Nominativo del medico obbligatorio"required />
+                    <span ng-show="form.nomemedico.$dirty && form.nomemedico.$error.required" class="help-block"></span>
+                </div>
+
+
+                <form name="form" ng-submit="vm.vendita()" role="form" action="/vendita.do">
+                    <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+                        <label for="cf">Codice fiscale del paziente</label>
+                        <input type="text" pattern="[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]" name="cf" id="cf" class="form-control" ng-model="vm.cf" placeholder="es.FLCRND..."
+                               data-error="Compila questo campo"required />
+                        <span ng-show="form.cf.$dirty && form.cf.$error.required" class="help-block"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" onclick="myControl()" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Controllo CF</button>
+                    </div>
                 </form>
 
-                <div class="form-actions">
-                    <button type="submit"  ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrazione paziente</button>
-                </div>
-        </div>
-</div>
+ <div id="toShow1">
+                <%--Aggiungo il paziente--%>
+                <%--<c:if test="${vendita.controllo == '1'}">--%>
+                    <form name="form" ng-submit="vm.paziente()" role="form" action="/vendita.do">
+                        <div class="form-group">
+                            <label for="cf">Codice fiscale</label>
+                            <input type="cf" value="${vendita.cf}" name="cf"  class="form-control" ng-model="vm.cf" readonly />
+                        </div>
 
+                        <div class="form-group" ng-class="{ 'has-error': form.firstName.$dirty && form.firstName.$error.required }">
+                            <label for="name">Nome paziente</label>
+                            <input type="text" name="name" id="name" class="form-control" ng-model="vm.name" placeholder="es.Mario"
+                                   data-error="Nome paziente obbligatorio "required />
+                            <span ng-show="form.name.$dirty && form.name.$error.required" class="help-block"></span>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error': form.cognome.$dirty && form.cognome.$error.required }">
+                            <label for="cognome">Cognome paziente</label>
+                            <input type="text" name="cognome" id="cognome" class="form-control" ng-model="vm.cognome" placeholder="es.Rossi"
+                                   data-error="Cognome paziente obbligatorio" required />
+                            <span ng-show="form.cognome.$dirty && form.cognome.$error.required" class="help-block"></span>
+                        </div>
+
+                        <form method="post">
+                            <div class="form-group form-group-sm">
+                                <label class="control-label requiredField" for="date">Date<span class="asteriskField"></span>
+                                </label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar">
+                                        </i>
+                                    </div>
+                                    <input class="form-control" id="data" name="date" placeholder="MM/DD/YYYY" type="text"/>
+                                </div>
+                            </div>
+                            <script src="/javascript/datepicker.js"></script>
+                        </form>
+
+                    </form>
+
+                    <div class="form-actions">
+                        <button type="submit"  ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrazione paziente</button>
+                    </div>
+        <%--</c:if>--%>
+
+</form>
+</form>
+</div>
+</div>
+</div>
+</div>
 
 </body>
 </html>

@@ -40,17 +40,16 @@ public class Vendita extends Action {
         rs = stmt.executeQuery(sql);
 
         HttpSession session = request.getSession();
+if(cf == "null") {
+    int i = 0;
+    while (rs.next()) {
+        i = rs.getInt("paziente");
+    }
 
-        int i = 0;
-        while(rs.next())
-        {
-            i = rs.getInt("paziente");
-        }
-
-        session.setAttribute("cf", cf);
-        controllo = i;
-        vendita.setControllo(controllo);
-
+    session.setAttribute("cf", cf);
+    controllo = i;
+    vendita.setControllo(controllo);
+}
         return mapping.findForward("vendita");
     }
 }
