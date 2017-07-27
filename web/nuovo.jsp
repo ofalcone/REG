@@ -36,9 +36,9 @@
             </ul>
         </div>
         <div class="col-sm-5 col-md-6">
-            <form name="form" ng-submit="vm.login()" role="form" action="/nuovo.do">
+            <form name="form" ng-submit="vm.login()" role="form"  action="/nuovo.do">
 
-                <div class="form-group" ng-class="{ 'has-error': form.mittente.$dirty && form.mittente.$error.required }">
+                <div class="form-group">
                     <label for="mittente">Mittente</label>
                     <input type="email" value="${login.user}" name="mittente" id="mittente" class="form-control" ng-model="vm.mittente" readonly />
                 </div>

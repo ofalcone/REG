@@ -18,6 +18,8 @@
 
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="CSS/inviati.css">
+
     <title>Messaggi Inviati</title>
 </head>
 <body>

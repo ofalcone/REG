@@ -24,7 +24,7 @@ public class ConnectionManager {
                 System.out.println("Connessione fallita al Database");
             }
         } catch (ClassNotFoundException ex) {
-            System.out.println("Driver non treovati");
+            System.out.println("Driver non trovati");
         }
         return con;
     }

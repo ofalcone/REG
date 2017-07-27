@@ -20,6 +20,8 @@
 
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="CSS/ricevuti.css">
+
     <title>Messaggi Ricevuti</title>
 </head>
 <body>

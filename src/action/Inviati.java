@@ -41,7 +41,8 @@ public class Inviati extends Action {
         Integer iduser = (Integer) session.getAttribute("id");
 
         String sql = "SELECT  idmessaggio, FKmittente,oggetto, testo, data,FKdestinatario,email FROM user, destinatario, messaggio\n" +
-                "WHERE iduser = FKdestinatario AND FKmittente = '" + iduser + "' AND FKdestinatario != '" + iduser + "' AND idmessaggio = FKmessaggio;";
+                "WHERE iduser = FKdestinatario AND FKmittente = '" + iduser + "' AND FKdestinatario != '" + iduser + "' AND idmessaggio = FKmessaggio\n" +
+                "                ORDER BY data desc;";
 
         stmt = cnn.createStatement();
         rs = stmt.executeQuery(sql);
