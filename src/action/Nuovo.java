@@ -64,6 +64,6 @@ public class Nuovo extends Action {
             statement.close();
         }
 
-        return mapping.findForward("inviati");
+        return mapping.findForward("nuovo");
     }
 }

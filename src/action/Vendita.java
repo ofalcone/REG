@@ -53,9 +53,7 @@ public class Vendita extends Action {
             nomeProdottoVenduto= a[0];
              qntVendute = Integer.parseInt(a[1]);
 
-
         }
-
 
         String sql = "SELECT ricetta FROM farmaco\n" +
                 "WHERE nome = '" + nomeProdottoVenduto + "';";
@@ -73,7 +71,9 @@ public class Vendita extends Action {
             return mapping.findForward("controlloutente");
         }
 
-
+        HttpSession session = request.getSession();
+        request.setAttribute("nomeprodotto", nomeProdottoVenduto);
+        request.setAttribute("qntvendute",qntVendute);
 
 
 

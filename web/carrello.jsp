@@ -23,7 +23,8 @@
 <div class="col-md-6 col-md-offset-3">
 
     <%--Aggiungo riferimento a ricetta--%>
-    <form name="form" ng-submit="vm.paziente()" role="form" method="post" action="/vendita.do">
+    ${nomeprodotto}
+        ${qntvendute}
 
 
 
