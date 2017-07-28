@@ -1,6 +1,8 @@
 package action;
 
+import java.util.Arrays;
 import bean.VenditaBean;
+import jdk.nashorn.internal.ir.RuntimeNode;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -12,6 +14,9 @@ import javax.servlet.http.HttpSession;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+
+import static com.sun.org.apache.xalan.internal.lib.ExsltStrings.split;
 
 /**
  * Created by Orlando on 26/07/2017.
@@ -28,29 +33,24 @@ public class Vendita extends Action {
 
         VenditaBean vendita = (VenditaBean) form;
 
-        String cf = vendita.getCf();
-        Integer controllo = vendita.getControllo();
+        String elencoprodotti[] = request.getParameterValues("elencoprodotti[]");
+        elencoprodotti.toString();
+        String nomeProdottoVenduto = "";
+        String qntVendute = "";
 
-        String sql="SELECT COUNT(*) as paziente FROM paziente\n" +
-                "WHERE CF='" + cf + "'";
+        String a [] = {"\n"};
+        String b = "";
 
 
-        cnn = ConnectionManager.getConnection();
-        stmt = cnn.createStatement();
-        rs = stmt.executeQuery(sql);
+        for(int i = 0; i < elencoprodotti.length; i++){
+            a[i]  = String.valueOf((elencoprodotti[i].split(";")));
 
-        HttpSession session = request.getSession();
-if(cf == "null") {
-    int i = 0;
-    while (rs.next()) {
-        i = rs.getInt("paziente");
-    }
+        }
+    System.out.println((a.toString()));
 
-    session.setAttribute("cf", cf);
-    controllo = i;
-    vendita.setControllo(controllo);
-}
-        return mapping.findForward("vendita");
+
+
+        return mapping.findForward("carrello");
     }
 }
 

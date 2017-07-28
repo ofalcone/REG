@@ -43,8 +43,6 @@ public class VenditaBean extends ActionForm {
     }
 
 
-
-
     public Integer getControllo() {
         return controllo;
     }
@@ -57,4 +55,14 @@ public class VenditaBean extends ActionForm {
     public Timestamp nascita;
     public String cognome;
     public Integer controllo;
+
+    public Integer getQntNuova() {
+        return qntNuova;
+    }
+
+    public void setQntNuova(Integer qntNuova) {
+        this.qntNuova = qntNuova;
+    }
+
+    public Integer qntNuova;
 }
